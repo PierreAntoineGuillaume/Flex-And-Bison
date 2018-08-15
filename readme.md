@@ -8,10 +8,14 @@ A quick summary of the content :
 
 From the book : 
 
-* calculator
 * wc
+> the same as the unix wc utility
+* calculator
+> parses the input and makes calculation (now just lex)
 
 From me :
 
 * match_url
+> greps the urls in stdout
 * template
+> template for newer files
