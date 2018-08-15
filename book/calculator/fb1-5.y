@@ -1,6 +1,5 @@
 %{
 #include <stdio.h>
-
 %}
 
 %token NUMBER
@@ -9,22 +8,22 @@
 
 %%
 
-calculation:
-           | calculation addition EOL { printf ("= %d\n",$2); }
+calculation: /* empty */
+ | calculation addition EOL { printf ("= %d\n",$2); }
 ;
 
 addition: factor
-        | addition ADD factor        { $$ = $1 + $3; }
-        | addition SUBSTRACT factor  { $$ = $1 - $3; }
+ | addition ADD factor        { $$ = $1 + $3; }
+ | addition SUBSTRACT factor  { $$ = $1 - $3; }
 ;
 
 factor: terminal
-      | factor MULTIPLY terminal     { $$ = $1 * $3; } 
-      | factor SUBSTRACT terminal    { $$ = $1 / $3; }
+ | factor MULTIPLY terminal     { $$ = $1 * $3; } 
+ | factor SUBSTRACT terminal    { $$ = $1 / $3; }
 ;
 
 terminal: NUMBER
-        | ABSOLUTE terminal { $$ = $2 > 0 ? $2 : -$2; }
+ | ABSOLUTE terminal { $$ = $2 > 0 ? $2 : -$2; }
 ;
 
 %%
