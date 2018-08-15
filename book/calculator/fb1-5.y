@@ -1,5 +1,12 @@
 %{
 #include <stdio.h>
+
+int yylex();
+void yyerror (char const *s)
+{
+    fprintf(stderr, "Error in bison : %s\n", s);
+}
+
 %}
 
 %token NUMBER
@@ -33,7 +40,3 @@ int main(){
     return 0;
 }
 
-int yyerror(char *s){
-    fprintf(stderr, "error: %c", s);
-    return 0;
-}
