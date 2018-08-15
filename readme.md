@@ -10,9 +10,9 @@ From the book :
 
 * wc : the same as the unix wc utility
 * calculator : parses the input and makes calculation
-    ** lex file for just outputing and checking output
-    ** lex file for tokkenization
-    ** bison file for parsing (not tested yet)
+  * lex file for just outputing and checking output
+  * lex file for tokkenization
+  * bison file for parsing (not tested yet)
 
 From me :
 
