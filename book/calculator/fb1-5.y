@@ -19,11 +19,11 @@ addition: factor
 
 factor: terminal
  | factor MULTIPLY terminal     { $$ = $1 * $3; } 
- | factor SUBSTRACT terminal    { $$ = $1 / $3; }
+ | factor DIVIDE terminal    { $$ = $1 / $3; }
 ;
 
 terminal: NUMBER
- | ABSOLUTE terminal { $$ = $2 > 0 ? $2 : -$2; }
+ | ABSOLUTE NUMBER { $$ = $2 > 0 ? $2 : -$2; }
 ;
 
 %%
