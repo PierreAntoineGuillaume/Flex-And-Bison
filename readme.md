@@ -13,8 +13,10 @@ From the book :
   * lex file for just outputing and checking output
   * lex file for tokkenization
   * bison file for parsing (not tested yet)
+  * flex-bison combo working, must make testing files, must think of testing process
 
 From me :
 
 * match_url : greps the urls in stdout
 * template : template for newer files
+  * has bison file, flex file, and template Makefile as well
