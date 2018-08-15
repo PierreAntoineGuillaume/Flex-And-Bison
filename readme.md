@@ -8,14 +8,13 @@ A quick summary of the content :
 
 From the book : 
 
-* wc
-> the same as the unix wc utility
-* calculator
-> parses the input and makes calculation (now just lex)
+* wc : the same as the unix wc utility
+* calculator : parses the input and makes calculation
+    ** lex file for just outputing and checking output
+    ** lex file for tokkenization
+    ** bison file for parsing (not tested yet)
 
 From me :
 
-* match_url
-> greps the urls in stdout
-* template
-> template for newer files
+* match_url : greps the urls in stdout
+* template : template for newer files
