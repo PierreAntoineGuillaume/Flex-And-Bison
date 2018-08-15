@@ -34,6 +34,6 @@ int main(){
 }
 
 int yyerror(char *s){
-    fprintf(stderr, "error: %s", s);
+    fprintf(stderr, "error: %c", s);
     return 0;
 }

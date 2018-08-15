@@ -9,9 +9,10 @@
 "*"     return MULTIPLY;
 "/"     return DIVIDE;
 "|"     return ABSOLUTE;
+
 [0-9]+  { yylval = atoi(yytext); return NUMBER;}
 \n      return EOL;
 [ \t]   ;
-.       { printf("Unmatched character %c\n",*yytext); }
+.       { printf("Unmatched character %s\n",*yytext); }
 
 %%
