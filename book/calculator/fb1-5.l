@@ -11,7 +11,7 @@
 "|"     return ABSOLUTE;
 
 [0-9]+  { yylval = atoi(yytext); return NUMBER;}
-\n      return EOL;
+"\n"      return EOL;
 [ \t]   ;
 .       { printf("Unmatched character %c\n",*yytext); }
 
