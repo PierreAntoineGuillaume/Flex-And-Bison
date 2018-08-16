@@ -10,6 +10,8 @@
 "/"     return DIVIDE;
 "|"     return ABSOLUTE;
 "&"     return BINARY_AND;
+"("     return OPEN_P;
+")"     return CLOSE_P;
 
 0x[0-9A-F]+   { yylval = strtol(yytext, NULL, 16); return NUMBER; }
 0[0-8]+       { yylval = strtol(yytext, NULL, 8); return NUMBER; }
