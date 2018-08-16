@@ -10,7 +10,7 @@ void yyerror (char const *s)
 %}
 
 %token NUMBER
-%token ADD SUBSTRACT MULTIPLY DIVIDE ABSOLUTE
+%token ADD SUBSTRACT MULTIPLY DIVIDE ABSOLUTE BINARY_AND
 %token EOL
 
 %%
@@ -23,6 +23,8 @@ calculation: /* empty */
 addition: factor
  | addition ADD factor        { $$ = $1 + $3; }
  | addition SUBSTRACT factor  { $$ = $1 - $3; }
+ | addition ABSOLUTE factor   { $$ = $1 | $3; }
+ | addition BINARY_AND factor { $$ = $1 & $3; }
 ;
 
 factor: terminal
