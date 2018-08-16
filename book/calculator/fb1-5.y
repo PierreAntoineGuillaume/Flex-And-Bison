@@ -16,6 +16,7 @@ void yyerror (char const *s)
 %%
 
 calculation: /* empty */
+ | calculation EOL
  | calculation addition EOL { printf ("= %d\n",$2); }
 ;
 
