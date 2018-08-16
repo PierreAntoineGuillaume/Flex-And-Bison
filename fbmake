@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-pushd ~/workspace/Flex-And-Bison > /dev/null
-    make $@
-popd > /dev/null
