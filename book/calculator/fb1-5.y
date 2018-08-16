@@ -10,7 +10,7 @@ void yyerror (char const *s)
 %}
 
 %token NUMBER
-%token ADD SUBSTRACT MULTIPLY DIVIDE ABSOLUTE BINARY_AND
+%token ADD SUBSTRACT MULTIPLY DIVIDE ABSOLUTE BINARY_AND OPEN_P CLOSE_P
 %token EOL
 
 %%
@@ -28,12 +28,13 @@ addition: factor
 ;
 
 factor: terminal
- | factor MULTIPLY terminal     { $$ = $1 * $3; } 
- | factor DIVIDE terminal    { $$ = $1 / $3; }
+ | factor MULTIPLY terminal   { $$ = $1 * $3; } 
+ | factor DIVIDE terminal     { $$ = $1 / $3; }
 ;
 
 terminal: NUMBER
- | ABSOLUTE NUMBER { $$ = $2 > 0 ? $2 : -$2; }
+ | ABSOLUTE NUMBER            { $$ = $2 > 0 ? $2 : -$2; }
+ | OPEN_P addition CLOSE_P    { $$ = $2; }
 ;
 
 %%
