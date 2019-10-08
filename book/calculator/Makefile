@@ -1,8 +1,8 @@
 
 dir=(make-build)
 
-fb1-5: lex.yy.c fb1-5.tab.c fb1-5.tab.h
-	 g++ -o $@ fb1-5.tab.c lex.yy.c -lfl -lm
+bin/fb1-5: lex.yy.c fb1-5.tab.c fb1-5.tab.h
+	 mkdir -p bin && g++ -o $@ fb1-5.tab.c lex.yy.c -lfl -lm
 
 fb1-5.tab.c: fb1-5.y
 	bison -d fb1-5.y
