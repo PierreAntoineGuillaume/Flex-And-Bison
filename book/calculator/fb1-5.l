@@ -1,5 +1,6 @@
 %{
-#include "fb1-5.tab.h"
+#include "fb1-5.yy.hpp"
+
 %}
 
 %%
@@ -12,12 +13,13 @@
 "&"     return BINARY_AND;
 "("     return OPEN_P;
 ")"     return CLOSE_P;
+"^"     return POWK;
 
 -?0x[0-9A-F]+   { yylval = strtol(yytext, NULL, 16); return NUMBER; }
 -?0[0-8]+       { yylval = strtol(yytext, NULL, 8); return NUMBER; }
 -?[0-9]+        { yylval = atoi(yytext); return NUMBER;}
 "//".*|"\n"   return EOL;
 [ \t]         ;
-.             { printf("Unmatched character %c\n",*yytext); }
+.             { return ERR_TOKEN; }
 
 %%
