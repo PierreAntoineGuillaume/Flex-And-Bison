@@ -6,10 +6,10 @@ find_package(FLEX)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-macro (flex_executable name)
-    FLEX_TARGET(scanner_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.l ${CMAKE_CURRENT_BINARY_DIR}/${name}.ll.cpp)
+macro (flex_executable name file)
+    FLEX_TARGET(scanner_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${file} ${CMAKE_CURRENT_BINARY_DIR}/${name}.ll.cpp)
     add_executable(${name} ${FLEX_scanner_${name}_OUTPUTS})
 endmacro(flex_executable)
 
-flex_executable(wc)
-flex_executable(fb2-2)
+flex_executable(wc wc.l)
+flex_executable(fb2-2 wc.l)
