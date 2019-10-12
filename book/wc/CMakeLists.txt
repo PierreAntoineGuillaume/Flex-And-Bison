@@ -12,3 +12,4 @@ macro (flex_executable name)
 endmacro(flex_executable)
 
 flex_executable(wc)
+flex_executable(fb2-2)
