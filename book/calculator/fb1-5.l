@@ -1,6 +1,7 @@
 %{
 
     #include "fb1-5.yy.hpp"
+    #define ECHO { return ERR_TOKEN; }
 
 %}
 
@@ -27,6 +28,5 @@
 "//".*|"\n"   return EOL;
 [ \t]         ;
 "//".*
-.             { return ERR_TOKEN; }
 
 %%
