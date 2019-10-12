@@ -3,9 +3,13 @@
 int in_quote=0;
 %}
 
+%option noyywrap
+
+
 quote \"
 
 %%
+
 
 
 {quote}             { in_quote=!in_quote; }

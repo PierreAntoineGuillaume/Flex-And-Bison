@@ -14,5 +14,3 @@ ADD_FLEX_BISON_DEPENDENCY(scanner parser)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(fb1-5 ${BISON_parser_OUTPUTS} ${FLEX_scanner_OUTPUTS})
-
-target_link_libraries(fb1-5 fl)

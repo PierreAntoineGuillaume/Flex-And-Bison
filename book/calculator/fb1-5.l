@@ -1,7 +1,10 @@
 %{
-#include "fb1-5.yy.hpp"
+
+    #include "fb1-5.yy.hpp"
 
 %}
+
+%option noyywrap
 
 %%
 

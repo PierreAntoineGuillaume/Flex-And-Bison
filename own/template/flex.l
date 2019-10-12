@@ -1,9 +1,12 @@
 %{
-#include <iostream>
-using std::cout;
-using std::endl;
-int mylineno = 0;
+    #include <iostream>
+    using std::cout;
+    using std::endl;
+    int mylineno = 0;
 %}
+
+%option noyywrap
+
 
 string  \"[^\n"]+\"
 

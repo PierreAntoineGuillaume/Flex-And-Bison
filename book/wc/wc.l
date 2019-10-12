@@ -4,6 +4,8 @@
     int lines = 0;
 %}
 
+%option noyywrap
+
 %%
 
 [a-zA-Z0-9]+  { words+=1; chars+=strlen(yytext); }

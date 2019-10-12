@@ -9,4 +9,3 @@ FLEX_TARGET(scanner ${CMAKE_CURRENT_SOURCE_DIR}/wc.l ${CMAKE_CURRENT_BINARY_DIR}
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_executable(wc ${FLEX_scanner_OUTPUTS})
-target_link_libraries(wc fl)

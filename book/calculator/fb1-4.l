@@ -12,6 +12,8 @@
     int yylval;
 %}
 
+%option noyywrap
+
 %%
 
 "+"     return ADD;
