@@ -1,6 +1,5 @@
 
-%option nodefault
-%option noyywrap
+%option nodefault noyywrap yylineno
 
 %%
 %%
