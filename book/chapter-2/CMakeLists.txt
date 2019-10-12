@@ -13,3 +13,4 @@ endmacro(flex_executable)
 
 flex_executable(wc)
 flex_executable(fb2-2)
+flex_executable(fb2-3)

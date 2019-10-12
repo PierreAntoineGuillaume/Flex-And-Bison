@@ -1,0 +1,6 @@
+
+%option nodefault
+%option noyywrap
+
+%%
+%%
