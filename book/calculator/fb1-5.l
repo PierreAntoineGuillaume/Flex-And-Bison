@@ -1,11 +1,11 @@
 %{
 
     #include "fb1-5.yy.hpp"
-    #define ECHO { return ERR_TOKEN; }
 
 %}
 
 %option noyywrap
+%option nodefault
 
 %%
 
