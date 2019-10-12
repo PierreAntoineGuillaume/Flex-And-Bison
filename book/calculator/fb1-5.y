@@ -22,28 +22,29 @@ void yyerror (char const *s)
 
 calculation: /* empty */
  | calculation EOL
- | calculation addition EOL { std::cout << "=" << $2 << std::endl; }
+ | calculation addition EOL         { std::cout << "=" << $2 << std::endl; }
 ;
 
 addition: factor
- | addition ADD factor        { $$ = $1 + $3; }
- | addition SUBSTRACT factor  { $$ = $1 - $3; }
- | addition ABSOLUTE factor   { $$ = $1 | $3; }
- | addition BINARY_AND factor { $$ = $1 & $3; }
+ | addition ADD 	    factor      { $$ = $1 + $3; }
+ | addition SUBSTRACT 	factor      { $$ = $1 - $3; }
+ | addition ABSOLUTE 	factor      { $$ = $1 | $3; }
+ | addition BINARY_AND 	factor      { $$ = $1 & $3; }
 ;
 
-factor: power
- | factor MULTIPLY power   { $$ = $1 * $3; }
- | factor DIVIDE power     { $$ = $1 / $3; }
+factor:             power
+ | factor MULTIPLY  power           { $$ = $1 * $3; }
+ | factor DIVIDE    power           { $$ = $1 / $3; }
 ;
 
-power: terminal
- | terminal POWK terminal   { $$=pow($1, $3); }
+power:              terminal
+ | terminal POWK    terminal        { $$=pow($1, $3); }
 
 
-terminal: NUMBER
- | ABSOLUTE NUMBER            { $$ = $2 > 0 ? $2 : -$2; }
- | OPEN_P addition CLOSE_P    { $$ = $2; }
+terminal:       NUMBER              { $$ = $1; }
+ | SUBSTRACT    terminal            { $$ = -$2; }
+ | ABSOLUTE 	addition ABSOLUTE   { $$ = $2 > 0 ? $2 : -$2; }
+ | OPEN_P 	    addition CLOSE_P   	{ $$ = $2; }
 ;
 
 %%
