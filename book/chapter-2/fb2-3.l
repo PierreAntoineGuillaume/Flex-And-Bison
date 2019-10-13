@@ -1,5 +1,0 @@
-
-%option nodefault noyywrap yylineno
-
-%%
-%%

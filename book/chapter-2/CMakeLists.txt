@@ -13,4 +13,4 @@ endmacro(flex_executable)
 
 flex_executable(wc wc.l)
 flex_executable(fb2-2 wc.l)
-flex_executable(fb2-3)
+flex_executable(fb2-3 fb2-3/lexer.l)
