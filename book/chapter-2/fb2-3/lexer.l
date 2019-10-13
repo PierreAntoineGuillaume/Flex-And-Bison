@@ -23,8 +23,13 @@
 ^"#"[ \t]*include[ \t]*[\"<]        { BEGIN IFILE; }
 
 <IFILE>[^ \t\n\">]+                 {
-                                        for (int c; c != '"' && c != '\n'; c=yyinput());
-                                        if (!newfile(yytext)) yyterminate();
+                                        char *name = strdup(yytext);
+                                        for (int c=yyinput(); c && c != '\n'; c=yyinput());
+                                        int scanNewFile = newfile(name);
+                                            free(name);
+                                        if (!scanNewFile) {
+                                            yyterminate();
+                                        }
                                         BEGIN INITIAL;
                                     }
 
@@ -45,7 +50,9 @@
                                         fprintf(yyout, "%-30s %s", file, yytext);
                                     }
 
-^\n                                 ;
+^\n                                 {
+                                        ECHO;
+                                    }
 
 \n                                  {
                                         ECHO;
