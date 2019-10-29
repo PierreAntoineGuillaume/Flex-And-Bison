@@ -2,22 +2,45 @@
     #include <iostream>
 %}
 
-%option noyywrap nodefault caseless yylineno
+%option noyywrap caseless yylineno
 
 %x PHP
-%x COMMENT
+%x COMMENT_LINE
+%x COMMENT_BLOCK
+
 %%
 
-"<?"|"<?php" {
+"<?"|"<?php"|"<?=" {
+    std::cout << yytext;
     BEGIN PHP;
 }
 
 <PHP>"?>" {
-    std::cout ';';
+    std::cout << yytext;
     BEGIN INITIAL;
 }
 
-. ;
-<PHP>.          std::cout << yytext;
-\n  ;
-<PHP>\n;
+.                   ;
+\n                  { std::cout  << '\n'; }
+<PHP>.              { std::cout << yytext; }
+
+<PHP>"#"            { BEGIN COMMENT_LINE; }
+<PHP>"//"           { BEGIN COMMENT_LINE; }
+
+<PHP>"/*"           { BEGIN COMMENT_BLOCK; }
+
+<COMMENT_BLOCK>.    ;
+<COMMENT_BLOCK>\n   { std::cout << '\n'; }
+<COMMENT_BLOCK>"*/" { BEGIN PHP; }
+
+<COMMENT_LINE>.     ;
+<COMMENT_LINE>\n    { std::cout << '\n'; BEGIN PHP; }
+
+
+%%
+
+int main()
+{
+    yylex();
+    return 0;
+}
