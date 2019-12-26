@@ -2,5 +2,6 @@
 *.tab.c
 *.tab.h
 a.out
+*.swp
 bin/
 cmake-build-debug/
