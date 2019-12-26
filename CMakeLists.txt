@@ -4,3 +4,4 @@ project(Flex-And-Bison)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-1)
 add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-2)
+add_subdirectory(${PROJECT_SOURCE_DIR}/own/phptools)
