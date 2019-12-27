@@ -1,6 +1,8 @@
 %{
 #include <iostream>
 #include <stdexcept>
+#include <vector>
+bool only_side_effects = false;
 %}
 
 %option noyywrap caseless yylineno
@@ -23,28 +25,38 @@
 
 .                   ;
 \n                  { std::cout  << '\n'; }
-<PHP>.              { std::cout << yytext; }
 
 <PHP>"#"            { BEGIN COMMENT_LINE; }
 <PHP>"//"           { BEGIN COMMENT_LINE; }
 
 <PHP>"/*"           { BEGIN COMMENT_BLOCK; }
+<PHP>.              { std::cout << yytext; }
 
-<COMMENT_BLOCK>.    ;
 <COMMENT_BLOCK>\n   { std::cout << '\n'; }
 <COMMENT_BLOCK>"*/" { BEGIN PHP; }
+<COMMENT_BLOCK>.    ;
 
-<COMMENT_LINE>.     ;
 <COMMENT_LINE>\n    { std::cout << '\n'; BEGIN PHP; }
+<COMMENT_LINE>.     ;
 
 
 %%
 
 void scan(const char *filename);
+bool is_option(const char* string);
 
 int main(int argc, char **argv)
 {
-    if (argc < 1)
+    std::vector<char*> arguments;
+    arguments.reserve(argc);
+
+    for (int i =1; i<argc; ++i){
+        if (!is_option(argv[i])) {
+            arguments.push_back(argv[i]);
+        }
+    }
+
+    if (arguments.size() < 1)
     {
         yylex();
         return 0;
@@ -52,13 +64,17 @@ int main(int argc, char **argv)
 
     try
     {
-        for (int i =1; i<argc; ++i){
-            scan(argv[i]);
+        for (const auto & file : arguments){
+            scan(file);
         }
         return 0;
     } catch(const std::runtime_error &e){
         return 1;
     }
+}
+
+bool is_option(const char* string) {
+    return strcmp(string, "--side-effect") == 0;
 }
 
 void scan(const char *filename)
