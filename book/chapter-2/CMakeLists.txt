@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.14)
-
-set(CMAKE_CXX_STANDARD 17)
-
 find_package(FLEX)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
