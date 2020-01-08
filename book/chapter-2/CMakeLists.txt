@@ -11,3 +11,5 @@ flex_executable(wc wc.l)
 flex_executable(fb2-2 wc.l)
 
 flex_executable(fb2-3 fb2-3/lexer.l)
+
+flex_executable(fb2-4 fb2-4/lexer.l)
