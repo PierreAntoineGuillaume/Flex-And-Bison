@@ -1,23 +1,27 @@
 
-%option noyywrap nodefault yylineno case-insensitive
+%option noyywrap yylineno case-insensitive
 
 %{
-    #include "src/ref.h"
-    #include "src/reflist.h"
-    #include "src/symbol.h"
+    #include "src/flex.h"
+    #include "src/basic_lexer.h"
 
-    #include "src/lexer.h"
+    basic_lexer lexer;
 %}
 
-%%
+WHITESPACES     [\n\r\t ]
+NOT_WHITESPACES [^\n\r\t ]
+
 
 %%
 
-int main ()
+{WHITESPACES}      ;
+{NOT_WHITESPACES}+       lexer.match(yytext);
+
+
+%%
+
+
+int main()
 {
-    lexer lexer;
-    yylineno=1;
-    lexer.lineno();
     lexer.lex();
-
 }

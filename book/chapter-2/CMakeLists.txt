@@ -21,9 +21,10 @@ target_sources(fb2-4 PUBLIC
         lib/symbol_table/src/symbol.h
         lib/symbol_table/src/symbol.cpp
 
-        lib/lexing/src/lexer.cpp
-        lib/lexing/src/lexer.h
+        lib/lexing/src/basic_lexer.cpp
+        lib/lexing/src/basic_lexer.h
+        lib/lexing/src/lexer_interface.h
         lib/lexing/src/flex.h
-        )
+    )
 
-target_include_directories(fb2-4 PUBLIC lib/symbol_table lib/lexing)
+target_include_directories(fb2-4 PUBLIC lib/symbol_table lib/lexing fb2-4)

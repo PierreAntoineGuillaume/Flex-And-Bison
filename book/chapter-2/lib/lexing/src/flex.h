@@ -4,9 +4,11 @@
 
 #pragma once
 
+#include <cstdio>
+
 int yylex();
-void yyrestart(FILE *file);
-int yyinput();
+void yyrestart(FILE * file);
+static int yyinput();
 void yyterminate();
 
 extern int yylineno;
