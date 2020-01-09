@@ -6,15 +6,18 @@
 #pragma once
 
 
+#include "src/symbol_manager.hpp"
+#include "src/symbol_catalog.h"
 #include "lexer_interface.h"
 
 
-class basic_lexer : public lexer_interface
+class reference_lexer : public lexer_interface
 {
+    symbol_manager<symbol_catalog> manager {};
 public:
-    basic_lexer();
+    reference_lexer();
     void lex() override;
     void lineno() override;
     void match(const std::string & a_string) override;
-    ~basic_lexer() = default;
+    ~reference_lexer() = default;
 };

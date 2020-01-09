@@ -3,9 +3,9 @@
 
 %{
     #include "src/flex.h"
-    #include "src/basic_lexer.h"
+    #include "src/reference_lexer.h"
 
-    basic_lexer lexer;
+    reference_lexer lexer;
 %}
 
 WHITESPACES     [\n\r\t ]
