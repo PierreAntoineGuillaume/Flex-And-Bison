@@ -20,7 +20,23 @@ symbol & symbol_catalog::lookup(const std::string & key)
     }
     return insertion.first->second;
 }
-const std::unordered_map<std::string, symbol> & symbol_catalog::get_catalog() const
+
+symbol_catalog::const_iterator symbol_catalog::cbegin() const
 {
-    return catalog;
+    return catalog.cbegin();
+}
+
+symbol_catalog::const_iterator symbol_catalog::cend() const
+{
+    return catalog.cend();
+}
+
+symbol_catalog::iterator symbol_catalog::begin()
+{
+    return catalog.begin();
+}
+
+symbol_catalog::iterator symbol_catalog::end()
+{
+    return catalog.end();
 }

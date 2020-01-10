@@ -12,10 +12,23 @@
 
 class symbol_catalog
 {
-private:
-    std::unordered_map<std::string, symbol> catalog;
 public:
+    typedef std::unordered_map<std::string, symbol> symbol_map;
+    typedef symbol_map::iterator iterator;
+    typedef symbol_map::const_iterator const_iterator;
+private:
+    symbol_map catalog;
+public:
+
+    const_iterator cbegin() const;
+    const_iterator cend() const;
+
+    iterator begin();
+    iterator end();
+
     symbol & lookup(const std::string & key);
-    [[nodiscard]] const std::unordered_map<std::string, symbol>& get_catalog() const;
+
+    symbol_catalog() = default;
+    symbol_catalog(const symbol_catalog &) = delete;
 };
 

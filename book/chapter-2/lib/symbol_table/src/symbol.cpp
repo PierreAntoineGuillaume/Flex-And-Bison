@@ -35,7 +35,23 @@ symbol::symbol(std::string name)
 {
 
 }
-const std::list<reference> & symbol::get_catalog() const
+
+symbol::const_iterator symbol::cbegin() const
 {
-    return catalog;
+    return catalog.cbegin();
+}
+
+symbol::const_iterator symbol::cend() const
+{
+    return catalog.cend();
+}
+
+symbol::iterator symbol::begin()
+{
+    return catalog.begin();
+}
+
+symbol::iterator symbol::end()
+{
+    return catalog.end();
 }

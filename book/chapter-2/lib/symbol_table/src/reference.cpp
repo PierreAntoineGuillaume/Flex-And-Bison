@@ -16,7 +16,7 @@ reference::reference(std::string filename, int line, int flags)
 
 std::ostream & operator<<(std::ostream & os, const reference & reference)
 {
-    return os << reference.filename + ':' << std::left << std::setw(5) << std::to_string(reference.line);
+    return os << reference.filename + ':' + std::to_string(reference.line);
 }
 
 bool operator==(const reference & lhs, const reference & rhs)

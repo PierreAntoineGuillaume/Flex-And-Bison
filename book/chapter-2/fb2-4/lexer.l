@@ -32,6 +32,7 @@ int main(int argc, char** argv)
         if (argc < 2)
             {
                 lexer.lexSTDIN();
+                lexer.display_table();
                 return 0;
             }
 
@@ -48,6 +49,8 @@ int main(int argc, char** argv)
                 lexer.lexFile(file.c_str(), handle);
                 fclose(handle);
             }
+
+            lexer.display_table();
     }
     catch (const std::exception& e)
     {
