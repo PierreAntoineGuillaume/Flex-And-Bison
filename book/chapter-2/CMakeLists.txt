@@ -16,8 +16,6 @@ flex_executable(fb2-4 fb2-4/lexer.l)
 target_sources(fb2-4 PUBLIC
         lib/symbol_table/src/reference.h
         lib/symbol_table/src/reference.cpp
-        lib/symbol_table/src/reference_catalog.h
-        lib/symbol_table/src/reference_catalog.cpp
         lib/symbol_table/src/symbol.h
         lib/symbol_table/src/symbol.cpp
         lib/symbol_table/src/symbol_catalog.cpp

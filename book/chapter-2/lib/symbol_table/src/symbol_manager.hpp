@@ -36,7 +36,7 @@ symbol_manager<SymbolCollector>::symbol_manager()
 template <class SymbolCollector>
 void symbol_manager<SymbolCollector>::add(const std::string & name, const std::string & filename, int line, int flags)
 {
-    auto symbol = collection.lookup(name);
+    auto& symbol = collection.lookup(name);
     symbol.mark(reference(filename, line, flags));
 }
 
