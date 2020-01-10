@@ -13,12 +13,11 @@
 class symbol
 {
 private:
-    const std::string name;
     std::list<reference> catalog;
     void add(const reference & new_reference);
 public:
+    const std::string name;
+    [[nodiscard]] const std::list<reference>& get_catalog() const;
     explicit symbol(std::string string);
-    symbol (const symbol&) = default;
-    ~symbol() = default;
     void mark(const reference & a_reference);
 };

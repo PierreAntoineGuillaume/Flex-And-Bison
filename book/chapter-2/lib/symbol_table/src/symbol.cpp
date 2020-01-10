@@ -35,3 +35,7 @@ symbol::symbol(std::string name)
 {
 
 }
+const std::list<reference> & symbol::get_catalog() const
+{
+    return catalog;
+}

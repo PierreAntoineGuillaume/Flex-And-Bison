@@ -15,7 +15,7 @@ class symbol_catalog
 private:
     std::unordered_map<std::string, symbol> catalog;
 public:
-    symbol_catalog() = default;
     symbol & lookup(const std::string & key);
+    [[nodiscard]] const std::unordered_map<std::string, symbol>& get_catalog() const;
 };
 
