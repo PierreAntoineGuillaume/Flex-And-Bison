@@ -18,3 +18,13 @@ std::ostream & operator<<(std::ostream & os, const reference & reference)
 {
     return os << reference.filename + ':' << std::left << std::setw(5) << std::to_string(reference.line);
 }
+
+bool operator==(const reference & lhs, const reference & rhs)
+{
+    return lhs.filename == rhs.filename && lhs.line == rhs.line;
+}
+
+bool operator!=(const reference & lhs, const reference & rhs)
+{
+    return !(lhs == rhs);
+}

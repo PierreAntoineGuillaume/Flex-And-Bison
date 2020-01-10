@@ -2,6 +2,7 @@
 // Created by pierreantoine on 09/01/2020.
 //
 
+#include <iostream>
 #include "symbol_catalog.h"
 
 

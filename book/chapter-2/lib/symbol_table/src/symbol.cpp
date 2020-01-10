@@ -15,12 +15,23 @@ void report(const reference & a_reference, const std::string & name)
 
 void symbol::mark(const reference & a_reference)
 {
-    report(a_reference, name);
-    catalog.add(a_reference);
+    this->add(a_reference);
 }
 
-symbol::symbol(std::string string)
-        : name(std::move(string))
+void symbol::add(const reference & new_reference)
+{
+    for (const auto & ref:catalog)
+    {
+        if (ref == new_reference)
+        {
+            return;
+        }
+    }
+    catalog.push_back(new_reference);
+}
+
+symbol::symbol(std::string name)
+        : name(std::move(name))
 {
 
 }

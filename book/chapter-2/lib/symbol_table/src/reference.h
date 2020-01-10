@@ -20,3 +20,6 @@ public:
 };
 
 std::ostream & operator<<(std::ostream & os, const reference & reference);
+
+bool operator==(const reference & lhs, const reference & rhs);
+bool operator!=(const reference & lhs, const reference & rhs);
