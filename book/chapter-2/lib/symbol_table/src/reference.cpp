@@ -5,10 +5,16 @@
 #include "reference.h"
 
 #include <utility>
+#include <iomanip>
 
 
 reference::reference(std::string filename, int line, int flags)
         : filename(std::move(filename)), line(line), flags(flags)
 {
 
+}
+
+std::ostream & operator<<(std::ostream & os, const reference & reference)
+{
+    return os << reference.filename + ':' << std::left << std::setw(5) << std::to_string(reference.line);
 }

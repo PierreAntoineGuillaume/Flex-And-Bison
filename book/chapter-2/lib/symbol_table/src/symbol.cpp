@@ -8,11 +8,14 @@
 #include <iostream>
 
 
+void report(const reference & a_reference, const std::string & name)
+{
+    std::cout << "From: " << a_reference << " marked symbol: \033[4m" + name + "\033[0m\n";
+}
+
 void symbol::mark(const reference & a_reference)
 {
-    std::cout << "marked symbol: «" + this->name + "» from "
-        << a_reference.filename + ":"
-        << a_reference.line << "\n";
+    report(a_reference, name);
     catalog.add(a_reference);
 }
 

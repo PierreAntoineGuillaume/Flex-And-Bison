@@ -19,3 +19,4 @@ public:
     reference(std::string filename, int line, int flags);
 };
 
+std::ostream & operator<<(std::ostream & os, const reference & reference);

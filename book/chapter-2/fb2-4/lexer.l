@@ -8,20 +8,49 @@
     reference_lexer lexer;
 %}
 
-WHITESPACES     [\n\r\t ]
-NOT_WHITESPACES [^\n\r\t ]
+WHITESPACES         [\n\r\t ]
+LETTERS               [a-zA-ZéèœæôêëàùûâîçïüÉÔÈÙÀÎÊËÇÏÜÂŒÆ]
+REST                .
 
+%%
+"le"|"les"|"je"|"de"|"s"|"l"|"sa"|"aux"|"au"|"du"|"ne"|"ce"|"que"|"à"|"a"|"c"|"un"|"une"|"la"|"ô"|"toi"|"mon"|"d"    ;
+"’"|"…"                     ;
+[-—,.':«»;()!?]          ;
+{WHITESPACES}           ;
+{LETTERS}+              lexer.match(yytext);
+.                       throw std::runtime_error("bad symbol" + std::string(yytext));
 
 %%
 
-{WHITESPACES}      ;
-{NOT_WHITESPACES}+       lexer.match(yytext);
+#include <vector>
+#include <iostream>
 
-
-%%
-
-
-int main()
+int main(int argc, char** argv)
 {
-    lexer.lex();
+    try
+    {
+        if (argc < 2)
+            {
+                lexer.lexSTDIN();
+                return 0;
+            }
+
+            std::vector<std::string> arguments(argv+1, argv+argc);
+
+            for (const auto &file:arguments)
+            {
+                FILE *handle = fopen(file.c_str(), "r");
+                if (!handle)
+                {
+                    throw new std::runtime_error("could not open file: " + file);
+                }
+
+                lexer.lexFile(file.c_str(), handle);
+                fclose(handle);
+            }
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
 }
