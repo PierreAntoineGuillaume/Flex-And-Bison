@@ -20,7 +20,8 @@ void reference_lexer::lineno()
 }
 void reference_lexer::match(const std::string & a_string)
 {
-    manager.add(a_string, this->current_file, yylineno, 0);
+    manager.add(a_string, this->current_file, yylineno, column, 0);
+    skip(a_string);
 }
 
 void reference_lexer::lexFile(const std::string & filename, FILE *handle)
@@ -28,6 +29,7 @@ void reference_lexer::lexFile(const std::string & filename, FILE *handle)
     this->current_file = filename;
 
     yylineno = 1;
+    resetColumn();
     yyrestart(handle);
     this->lex();
 }
@@ -47,4 +49,24 @@ void reference_lexer::display_table()
         }
         std::cout << "\n";
     }
+}
+void reference_lexer::resetColumn()
+{
+    column = 1;
+}
+
+
+std::size_t compute_length(const std::string & s)
+{
+    return (s.length() - count_if(
+            s.begin(), s.end(), [](unsigned char c) -> bool
+            {
+                return (c & 0xC0u) == 0x80;
+            }
+    ));
+}
+
+void reference_lexer::skip(const std::string & ignored)
+{
+    column += compute_length(ignored);
 }

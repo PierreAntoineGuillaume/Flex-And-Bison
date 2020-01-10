@@ -15,7 +15,11 @@ class reference_lexer : public lexer_interface
 {
     symbol_manager<symbol_catalog> manager;
     std::string current_file;
+    std::size_t column = 1;
 public:
+    void resetColumn();
+    void skip(const std::string & ignored);
+
     reference_lexer() = default;
     void lex() override;
     void lineno() override;

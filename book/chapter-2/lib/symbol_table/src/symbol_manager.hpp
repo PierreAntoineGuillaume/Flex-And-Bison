@@ -25,14 +25,14 @@ public:
     iterator end();
     const_iterator cend() const;
 
-    void add(const std::string & name, const std::string & filename, int line, int flags);
+    void add(const std::string & name, const std::string & filename, int line, std::size_t column, int flags);
 };
 
 template <class symbol_collection>
-void symbol_manager<symbol_collection>::add(const std::string & name, const std::string & filename, int line, int flags)
+void symbol_manager<symbol_collection>::add(const std::string & name, const std::string & filename, int line, std::size_t column, int flags)
 {
     auto & symbol = collection.lookup(name);
-    symbol.mark(reference(filename, line, flags));
+    symbol.mark(reference(filename, line, column, flags));
 }
 
 template <class symbol_collection>

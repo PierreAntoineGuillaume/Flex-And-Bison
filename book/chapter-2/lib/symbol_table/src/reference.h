@@ -14,9 +14,10 @@ class reference
 public:
     const std::string filename;
     const int line;
+    const std::size_t column;
     const int flags;
 
-    reference(std::string filename, int line, int flags);
+    reference(std::string filename, int line, std::size_t column, int flags);
 };
 
 std::ostream & operator<<(std::ostream & os, const reference & reference);

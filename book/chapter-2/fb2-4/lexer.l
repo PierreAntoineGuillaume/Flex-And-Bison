@@ -7,16 +7,16 @@
 
     reference_lexer lexer;
 %}
-
-WHITESPACES         [\n\r\t ]
+NEWLINE             [\n\r]+
+WHITESPACE         [\t ]
 LETTERS               [a-zA-ZéèœæôêëàùûâîçïüÉÔÈÙÀÎÊËÇÏÜÂŒÆ]
 REST                .
 
 %%
-"le"|"les"|"je"|"de"|"s"|"l"|"sa"|"aux"|"au"|"du"|"ne"|"ce"|"que"|"à"|"a"|"c"|"un"|"une"|"la"|"ô"|"toi"|"mon"|"d"    ;
-"’"|"…"                     ;
-[-—,.':«»;()!?]          ;
-{WHITESPACES}           ;
+
+"le"|"les"|"je"|"de"|"s"|"l"|"sa"|"aux"|"au"|"du"|"ne"|"ce"|"que"|"à"|"a"|"c"|"un"|"une"|"la"|"ô"|"toi"|"mon"|"d"    lexer.skip(yytext);
+{WHITESPACE}|[-—,.':«»;()!?]|"’"|"…"            lexer.skip(yytext);
+{NEWLINE}               lexer.resetColumn();
 {LETTERS}+              lexer.match(yytext);
 .                       throw std::runtime_error("bad symbol" + std::string(yytext));
 
