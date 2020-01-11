@@ -8,6 +8,7 @@
 
 int yylex();
 void yyrestart(FILE * file);
+void yyerror(const char *s, ...);
 static int yyinput();
 void yyterminate();
 
