@@ -1,7 +1,11 @@
 %{
-#include "fb1-5.yy.hpp"
+
+    #include "fb1-5.yy.hpp"
 
 %}
+
+%option noyywrap
+%option nodefault
 
 %%
 
@@ -24,6 +28,5 @@
 "//".*|"\n"   return EOL;
 [ \t]         ;
 "//".*
-.             { return ERR_TOKEN; }
 
 %%

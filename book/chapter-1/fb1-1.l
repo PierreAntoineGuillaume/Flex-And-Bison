@@ -1,4 +1,9 @@
+
+%option noyywrap
+
 %%
+
+
 "+"    printf("PLUS\n");
 "-"    printf("MINUS\n");
 "*"    printf("MULTIPIED BY\n");

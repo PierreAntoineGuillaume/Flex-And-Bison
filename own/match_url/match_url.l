@@ -4,6 +4,7 @@
 
 %option c++
 %option debug
+%option noyywrap
 
 TEST            test
 PROTOCOL        https?|ftp|sftp|ftps|ssh
