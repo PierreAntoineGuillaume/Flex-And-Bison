@@ -3,7 +3,7 @@
 
 %{
     #include "src/flex.h"
-    #include "src/reference_lexer.h"
+    #include "reference_lexer.h"
 
     reference_lexer lexer;
 %}

@@ -6,7 +6,7 @@
 
 #include "reference_lexer.h"
 
-#include "flex.h"
+#include "src/flex.h"
 
 
 void reference_lexer::lex()

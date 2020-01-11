@@ -8,7 +8,7 @@
 
 #include "src/symbol_manager.hpp"
 #include "src/symbol_catalog.h"
-#include "lexer_interface.h"
+#include "src/lexer_interface.h"
 
 
 class reference_lexer : public lexer_interface
