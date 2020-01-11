@@ -13,7 +13,7 @@
 
 class reference_lexer : public lexer_interface
 {
-    symbol_manager<symbol_catalog> manager;
+    symbol::symbol_manager<symbol::symbol_catalog> manager;
     std::string current_file;
     std::size_t column = 1;
 public:

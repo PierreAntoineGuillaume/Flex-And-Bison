@@ -6,7 +6,7 @@
 #include "symbol_catalog.h"
 
 
-symbol & symbol_catalog::lookup(const std::string & key)
+symbol::symbol & symbol::symbol_catalog::lookup(const std::string & key)
 {
     auto symbol_link = catalog.find(key);
     if (symbol_link != catalog.end())
@@ -21,22 +21,22 @@ symbol & symbol_catalog::lookup(const std::string & key)
     return insertion.first->second;
 }
 
-symbol_catalog::const_iterator symbol_catalog::cbegin() const
+symbol::symbol_catalog::const_iterator symbol::symbol_catalog::cbegin() const
 {
     return catalog.cbegin();
 }
 
-symbol_catalog::const_iterator symbol_catalog::cend() const
+symbol::symbol_catalog::const_iterator symbol::symbol_catalog::cend() const
 {
     return catalog.cend();
 }
 
-symbol_catalog::iterator symbol_catalog::begin()
+symbol::symbol_catalog::iterator symbol::symbol_catalog::begin()
 {
     return catalog.begin();
 }
 
-symbol_catalog::iterator symbol_catalog::end()
+symbol::symbol_catalog::iterator symbol::symbol_catalog::end()
 {
     return catalog.end();
 }

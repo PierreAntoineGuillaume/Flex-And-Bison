@@ -14,19 +14,19 @@ flex_executable(fb2-3 fb2-3/lexer.l)
 
 flex_executable(fb2-4 fb2-4/lexer.l)
 target_sources(fb2-4 PUBLIC
-        lib/symbol_table/src/reference.h
-        lib/symbol_table/src/reference.cpp
-        lib/symbol_table/src/symbol.h
-        lib/symbol_table/src/symbol.cpp
-        lib/symbol_table/src/symbol_catalog.cpp
-        lib/symbol_table/src/symbol_catalog.h
-        lib/symbol_table/src/symbol_manager.hpp
+        ../../lib/symbol_table/src/reference.h
+        ../../lib/symbol_table/src/reference.cpp
+        ../../lib/symbol_table/src/symbol.h
+        ../../lib/symbol_table/src/symbol.cpp
+        ../../lib/symbol_table/src/symbol_catalog.cpp
+        ../../lib/symbol_table/src/symbol_catalog.h
+        ../../lib/symbol_table/src/symbol_manager.hpp
 
-        lib/lexing/src/lexer_interface.h
-        lib/lexing/src/flex.h
+        ../../lib/lexing/src/lexer_interface.h
+        ../../lib/lexing/src/flex.h
 
         fb2-4/reference_lexer.cpp
         fb2-4/reference_lexer.h
         )
 
-target_include_directories(fb2-4 PUBLIC lib/symbol_table lib/lexing fb2-4)
+target_include_directories(fb2-4 PUBLIC ../../lib/symbol_table ../../lib/lexing fb2-4)

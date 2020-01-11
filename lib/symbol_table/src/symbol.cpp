@@ -8,17 +8,17 @@
 #include <iostream>
 
 
-void report(const reference & a_reference, const std::string & name)
+void report(const symbol::reference & a_reference, const std::string & name)
 {
     std::cout << "From: " << a_reference << " marked symbol: \033[4m" + name + "\033[0m\n";
 }
 
-void symbol::mark(const reference & a_reference)
+void symbol::symbol::mark(const reference & a_reference)
 {
     this->add(a_reference);
 }
 
-void symbol::add(const reference & new_reference)
+void symbol::symbol::add(const reference & new_reference)
 {
     for (const auto & ref:catalog)
     {
@@ -30,28 +30,28 @@ void symbol::add(const reference & new_reference)
     catalog.push_back(new_reference);
 }
 
-symbol::symbol(std::string name)
+symbol::symbol::symbol(std::string name)
         : name(std::move(name))
 {
 
 }
 
-symbol::const_iterator symbol::cbegin() const
+symbol::symbol::const_iterator symbol::symbol::cbegin() const
 {
     return catalog.cbegin();
 }
 
-symbol::const_iterator symbol::cend() const
+symbol::symbol::const_iterator symbol::symbol::cend() const
 {
     return catalog.cend();
 }
 
-symbol::iterator symbol::begin()
+symbol::symbol::iterator symbol::symbol::begin()
 {
     return catalog.begin();
 }
 
-symbol::iterator symbol::end()
+symbol::symbol::iterator symbol::symbol::end()
 {
     return catalog.end();
 }
