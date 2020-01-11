@@ -14,6 +14,7 @@ file(GLOB_RECURSE SRC_FILES
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-1)
 add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-2)
+add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-3)
 add_subdirectory(${PROJECT_SOURCE_DIR}/own/phptools)
 
 
