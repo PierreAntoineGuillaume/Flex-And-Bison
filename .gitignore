@@ -3,5 +3,6 @@
 *.tab.h
 a.out
 *.swp
+*.output
 bin/
 cmake-build-debug/
