@@ -1,24 +1,15 @@
 # Flex-And-Bison
 
-## Current aim : making a test process
-
-A project to gather my training, experiments and programs using Flex and Bison.
+A project to gather my training and experiments Flex and Bison.
 
 Makes use of *Flex & Bison* by John Levine. Copyright 2008 O'Reilly Media, Inc. 978-0-596-15597-1 
 
-A quick summary of the content :
-
-From the book : 
-
-* wc : the same as the unix wc utility
-* calculator : parses the input and makes calculation
-  * lex file for just outputing and checking output
-  * lex file for tokkenization
-  * bison file for parsing (not tested yet)
-  * flex-bison combo working, must make testing files, must think of testing process
-
-From me :
+A quick summary of my own content :
 
 * match_url : greps the urls in stdout
-* template : template for newer files
-  * has bison file, flex file, and template Makefile as well
+* cleanPhp  : trims comments and outside of php tags in a php file
+
+## Aim
+
+* Completing the Flex & Bison Book
+    * Currently working on chapter 3-1
