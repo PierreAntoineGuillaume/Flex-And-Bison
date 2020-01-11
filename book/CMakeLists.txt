@@ -8,7 +8,7 @@ macro(flex_executable name lexer)
 endmacro(flex_executable)
 
 macro(simple_fb_target name)
-    BISON_TARGET(parser_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.y ${CMAKE_CURRENT_BINARY_DIR}/${name}.yy.cpp)
+    BISON_TARGET(parser_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.y ${CMAKE_CURRENT_BINARY_DIR}/${name}.yy.cpp VERBOSE)
     FLEX_TARGET(scanner_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${name}.l ${CMAKE_CURRENT_BINARY_DIR}/${name}.ll.cpp)
     ADD_FLEX_BISON_DEPENDENCY(scanner_${name} parser_${name})
 endmacro(simple_fb_target)

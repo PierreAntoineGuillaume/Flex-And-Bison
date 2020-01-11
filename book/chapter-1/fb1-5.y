@@ -16,7 +16,6 @@ void yyerror (char const *s)
 %token NUMBER
 %token ADD SUBSTRACT MULTIPLY DIVIDE POWK ABSOLUTE BINARY_AND OPEN_P CLOSE_P
 %token EOL
-%token ERR_TOKEN
 
 %%
 
@@ -28,8 +27,8 @@ calculation: /* empty */
 addition: factor
  | addition ADD 	    factor      { $$ = $1 + $3; }
  | addition SUBSTRACT 	factor      { $$ = $1 - $3; }
- | addition ABSOLUTE 	factor      { $$ = $1 | $3; }
  | addition BINARY_AND 	factor      { $$ = $1 & $3; }
+ //| addition ABSOLUTE 	factor      { $$ = $1 | $3; }
 ;
 
 factor:             power
