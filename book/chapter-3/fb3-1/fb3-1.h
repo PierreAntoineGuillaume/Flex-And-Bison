@@ -6,3 +6,23 @@
 
 
 #include "src/flex.h"
+
+
+typedef struct ast
+{
+    int nodetype;
+    ast *l;
+    ast *r;
+} ast;
+
+typedef struct numval
+{
+    int nodetype;
+    double number;
+} numval;
+
+ast *newast(int nodetype, ast *l, ast *r);
+ast *newnum(double d);
+
+double eval(ast *);
+void treefree(ast *);
