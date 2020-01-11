@@ -5,16 +5,15 @@ set(CMAKE_CXX_FLAGS "-W -Wall -Wextra --pedantic -Werror -fconcepts")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unused-function")
 
 project(Flex-And-Bison)
-
+find_package(BISON)
+find_package(FLEX)
 
 file(GLOB_RECURSE SRC_FILES
         "lib/*.h"
         "lib/*.cpp"
         "lib/*.hpp")
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-1)
-add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-2)
-add_subdirectory(${PROJECT_SOURCE_DIR}/book/chapter-3)
+add_subdirectory(${PROJECT_SOURCE_DIR}/book)
 add_subdirectory(${PROJECT_SOURCE_DIR}/own/phptools)
 
 

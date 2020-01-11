@@ -11,9 +11,4 @@ add_definitions(-DYY_NO_UNPUT)
 
 set(CMAKE_CXX_STANDARD 17)
 
-macro (flex_executable name file)
-    FLEX_TARGET(scanner_${name} ${CMAKE_CURRENT_SOURCE_DIR}/${file} ${CMAKE_CURRENT_BINARY_DIR}/${name}.ll.cpp)
-    add_executable(${name} ${FLEX_scanner_${name}_OUTPUTS})
-endmacro(flex_executable)
-
 flex_executable(cleanPhp trimphp.l)
