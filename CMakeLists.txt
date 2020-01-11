@@ -13,9 +13,11 @@ file(GLOB_RECURSE SRC_FILES
         "lib/*.cpp"
         "lib/*.hpp")
 
+set(LEXING ${PROJECT_SOURCE_DIR}/lib/lexing)
+set(SYMBOL_TABLE ${PROJECT_SOURCE_DIR}/lib/symbol_table)
+
 add_subdirectory(${PROJECT_SOURCE_DIR}/book)
 add_subdirectory(${PROJECT_SOURCE_DIR}/own/phptools)
-
 
 enable_testing()
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
