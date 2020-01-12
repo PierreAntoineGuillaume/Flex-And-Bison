@@ -18,12 +18,12 @@ namespace v1::ast::fb31
         astptr left_child;
         astptr right_child;
     public:
-        const unsigned char symbol;
+        const char symbol;
         ~dual_ast() override;
         T accept(ast_visitor<T> & visitor) override;
         T accept(ast_visitor<T> && visitor) override;
 
-        dual_ast(astptr left, unsigned char symbol, astptr right);
+        dual_ast(astptr left, char symbol, astptr right);
 
         ast<T> & left();
         ast<T> & right();
@@ -43,7 +43,7 @@ T v1::ast::fb31::dual_ast<T>::accept(v1::ast::fb31::ast_visitor<T> && visitor)
 }
 
 template <typename T>
-v1::ast::fb31::dual_ast<T>::dual_ast(astptr left, unsigned char symbol, astptr right)
+v1::ast::fb31::dual_ast<T>::dual_ast(astptr left, char symbol, astptr right)
         :   ast<T>(), left_child(left), right_child(right), symbol(symbol)
 {
 }

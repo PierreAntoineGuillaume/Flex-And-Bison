@@ -15,7 +15,7 @@ namespace v1::ast::fb31
     class single_ast : public ast<T>
     {
     public:
-        const unsigned char symbol;
+        const char symbol;
     private:
         typedef ast<T>* astptr;
         astptr child;
@@ -24,7 +24,7 @@ namespace v1::ast::fb31
         T accept(ast_visitor<T> & visitor) override;
         T accept(ast_visitor<T> && visitor) override;
 
-        single_ast(unsigned char symbol, astptr child);
+        single_ast(char symbol, astptr child);
 
         ast<T> & get_child();
     };
@@ -42,7 +42,7 @@ T v1::ast::fb31::single_ast<T>::accept(v1::ast::fb31::ast_visitor<T> && visitor)
 }
 
 template <typename T>
-v1::ast::fb31::single_ast<T>::single_ast(unsigned char symbol, astptr child)
+v1::ast::fb31::single_ast<T>::single_ast(char symbol, astptr child)
         :  ast<T>(), symbol(symbol), child(child)
 {
 }

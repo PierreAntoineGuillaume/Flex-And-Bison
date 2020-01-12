@@ -24,6 +24,7 @@ namespace v1::ast::fb31
 
         ~evaluation_ast_visitor() override = default;
     };
+    const std::string unknown_symbol = "unknown symbol provided ";
 }
 
 template <typename T>
@@ -40,14 +41,42 @@ T v1::ast::fb31::evaluation_ast_visitor<T>::visit(v1::ast::fb31::dual_ast<T> & a
         case '+': return (ast.left().accept(*this) + ast.right().accept(*this));
         case '-': return (ast.left().accept(*this) - ast.right().accept(*this));
         case '*': return (ast.left().accept(*this) * ast.right().accept(*this));
-        case '/': {
-            const auto& divider = ast.right().accept(*this);
-            if (divider == 0) {
+        case '/':
+        {
+            const auto & divider = ast.right().accept(*this);
+            if (divider == 0)
+            {
                 throw std::runtime_error("zero division");
             }
             return (ast.left().accept(*this) / divider);
         }
-        default:throw std::runtime_error("Unknown symbol provided");
+        default:throw std::runtime_error(unknown_symbol + ast.symbol);
+    }
+}
+
+template <>
+int v1::ast::fb31::evaluation_ast_visitor<int>::visit(v1::ast::fb31::dual_ast<int> & ast)
+{
+    switch (ast.symbol)
+    {
+        case '+': return (ast.left().accept(*this) + ast.right().accept(*this));
+        case '-': return (ast.left().accept(*this) - ast.right().accept(*this));
+        case '*': return (ast.left().accept(*this) * ast.right().accept(*this));
+        case '%':
+        case '/':
+        {
+            const auto & divider = ast.right().accept(*this);
+            if (divider == 0)
+            {
+                throw std::runtime_error("zero division");
+            }
+            if (ast.symbol == '/')
+            {
+                return (ast.left().accept(*this) / divider);
+            }
+            return (ast.left().accept(*this) % divider);
+        }
+        default:throw std::runtime_error(unknown_symbol + ast.symbol );
     }
 }
 
@@ -56,8 +85,8 @@ T v1::ast::fb31::evaluation_ast_visitor<T>::visit(v1::ast::fb31::single_ast<T> &
 {
     switch (ast.symbol)
     {
-        case 'M': return - ast.get_child().accept(*this);
+        case 'M': return -ast.get_child().accept(*this);
         case '|': return abs(ast.get_child().accept(*this));
-        default:throw std::runtime_error("Unknown symbol " + ast.symbol);
+        default:throw std::runtime_error(unknown_symbol + ast.symbol);
     }
 }
