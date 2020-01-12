@@ -20,9 +20,9 @@ typedef evaluation_ast_visitor<int> eval;
 
 BOOST_AUTO_TEST_CASE(INT_AST)
 {
-    auto five = std::make_shared<val_ast>(5);
+    auto five  = std::make_shared<val_ast>(5);
     auto mfive = std::make_shared<val_ast>(-5);
-    auto zero = std::make_shared<val_ast>(0);
+    auto zero  = std::make_shared<val_ast>(0);
 
     auto evaler = eval();
     BOOST_CHECK_EQUAL(5, five->accept(evaler));
