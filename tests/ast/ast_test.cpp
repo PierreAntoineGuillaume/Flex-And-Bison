@@ -13,27 +13,27 @@
 
 using namespace v1::ast::fb31;
 
-typedef value_ast<int> val_ast;
-typedef single_ast<int> s_ast;
-typedef dual_ast<int> d_ast;
-typedef evaluation_ast_visitor<int> eval;
+typedef value_ast<double> val_ast;
+typedef single_ast<double> s_ast;
+typedef dual_ast<double> d_ast;
+typedef evaluation_ast_visitor<double> eval;
+
+inline std::shared_ptr<val_ast> val(double d)
+{
+    return std::make_shared<val_ast>(d);
+}
 
 BOOST_AUTO_TEST_CASE(INT_AST)
 {
-    auto five  = std::make_shared<val_ast>(5);
-    auto mfive = std::make_shared<val_ast>(-5);
-    auto zero  = std::make_shared<val_ast>(0);
-
-    auto evaler = eval();
-    BOOST_CHECK_EQUAL(5, five->accept(evaler));
-    BOOST_CHECK_EQUAL(-5, mfive->accept(evaler));
-    BOOST_CHECK_EQUAL(-5, s_ast('M', five).accept(evaler));
-    BOOST_CHECK_EQUAL(5, s_ast('M', mfive).accept(evaler));
-    BOOST_CHECK_EQUAL(10, d_ast('-', five, mfive).accept(evaler));
+    BOOST_CHECK_EQUAL(5, val(5)->accept(eval()));
+    BOOST_CHECK_EQUAL(-5, val(-5)->accept(eval()));
+    BOOST_CHECK_EQUAL(-5, s_ast('M', val(5.f)).accept(eval()));
+    BOOST_CHECK_EQUAL(5, s_ast('M', val(-5.f)).accept(eval()));
+    BOOST_CHECK_EQUAL(10, d_ast(val(5), '-', val(-5)).accept(eval()));
 
     try
     {
-        d_ast('/', five, zero).accept(evaler);
+        d_ast(val(0), '/', val(0)).accept(eval());
         BOOST_ERROR("No exception thrown on zero division");
     }
     catch (const std::runtime_error & e)
