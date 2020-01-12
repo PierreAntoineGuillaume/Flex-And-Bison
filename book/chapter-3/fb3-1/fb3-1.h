@@ -7,22 +7,25 @@
 
 #include "src/flex.h"
 
-
-typedef struct ast
+namespace fb3_1
 {
-    int nodetype;
-    ast *l;
-    ast *r;
-} ast;
 
-typedef struct numval
-{
-    int nodetype;
-    double number;
-} numval;
+    typedef struct ast
+    {
+        int nodetype;
+        ast *l;
+        ast *r;
+    } ast;
 
-ast *newast(int nodetype, ast *l, ast *r);
-ast *newnum(double d);
+    typedef struct numval
+    {
+        int nodetype;
+        double number;
+    } numval;
 
-double eval(ast *);
-void treefree(ast *);
+    ast *newast(int nodetype, ast *l, ast *r);
+    ast *newnum(double d);
+
+    double eval(ast *);
+    void treefree(ast *);
+}
