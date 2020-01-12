@@ -12,5 +12,4 @@ A quick summary of my own content :
 ## Aim
 
 * Completing the Flex & Bison Book
-    * refacto 3-1
     * Currently working on chapter 3-2
