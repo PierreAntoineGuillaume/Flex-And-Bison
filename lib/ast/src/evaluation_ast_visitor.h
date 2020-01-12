@@ -47,7 +47,7 @@ T v1::ast::fb31::evaluation_ast_visitor<T>::visit(v1::ast::fb31::dual_ast<T> & a
             }
             return (ast.left().accept(*this) / divider);
         }
-        default:throw std::runtime_error("Unknown symbol " + ast.symbol);
+        default:throw std::runtime_error("Unknown symbol provided");
     }
 }
 

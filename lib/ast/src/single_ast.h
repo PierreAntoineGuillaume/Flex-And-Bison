@@ -6,8 +6,8 @@
 #pragma once
 
 
+#include <memory>
 #include "ast.h"
-
 
 namespace v1::ast::fb31
 {
@@ -17,10 +17,10 @@ namespace v1::ast::fb31
     public:
         const unsigned char symbol;
     private:
-        typedef std::shared_ptr<ast<T>> astptr;
+        typedef ast<T>* astptr;
         astptr child;
     public:
-        ~single_ast() override = default;
+        ~single_ast() override;
         T accept(ast_visitor<T> & visitor) override;
         T accept(ast_visitor<T> && visitor) override;
 
@@ -45,7 +45,6 @@ template <typename T>
 v1::ast::fb31::single_ast<T>::single_ast(unsigned char symbol, astptr child)
         :  ast<T>(), symbol(symbol), child(child)
 {
-
 }
 
 template <typename T>
@@ -53,4 +52,10 @@ template <typename T>
 v1::ast::fb31::ast<T> & v1::ast::fb31::single_ast<T>::get_child()
 {
     return *child;
+}
+template <typename T>
+v1::ast::fb31::single_ast<T>::~single_ast()
+{
+    delete child;
+    child=0;
 }

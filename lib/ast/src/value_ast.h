@@ -6,6 +6,7 @@
 #pragma once
 
 
+#include <iostream>
 #include "ast.h"
 
 
@@ -41,5 +42,4 @@ template <typename T>
 v1::ast::fb31::value_ast<T>::value_ast(const T & value)
         : value(value)
 {
-
 }
