@@ -9,12 +9,13 @@
 #include "fb3-1.h"
 
 
-ast *newast(int nodetype, ast *l, ast *r)
+
+fb3_1::ast * fb3_1::newast(int nodetype, fb3_1::ast *l, fb3_1::ast *r)
 {
-    ast *a = static_cast<ast *>(malloc(sizeof(ast)));
+    fb3_1::ast *a = static_cast<fb3_1::ast *>(malloc(sizeof(fb3_1::ast)));
     if (!a)
     {
-        yyerror("out of space");
+        ::yyerror("out of space");
         exit(0);
     }
     a->nodetype = nodetype;
@@ -23,46 +24,46 @@ ast *newast(int nodetype, ast *l, ast *r)
     return a;
 }
 
-ast *newnum(double d)
+fb3_1::ast * fb3_1::newnum(double d)
 {
-    numval *a = static_cast<numval *>(malloc(sizeof(numval)));
+    fb3_1::numval *a = static_cast<fb3_1::numval *>(malloc(sizeof(fb3_1::numval)));
     if (!a)
     {
-        yyerror("out of space");
+        ::yyerror("out of space");
         exit(0);
     }
     a->nodetype = 'K';
     a->number = d;
-    return (ast *) a;
+    return (fb3_1::ast *) a;
 }
 
-double eval(ast *a)
+double fb3_1::eval(fb3_1::ast *a)
 {
     switch (a->nodetype)
     {
-        default: printf("internal error: eval bad node %c\n", a->nodetype);
+        default: printf("internal error: fb3_1::eval bad node %c\n", a->nodetype);
             return 0.;
 
-        case 'K': return ((numval *) a)->number;
+        case 'K': return ((fb3_1::numval *) a)->number;
 
-        case '+': return eval(a->l) + eval(a->r);
-        case '-': return eval(a->l) - eval(a->r);
-        case '*': return eval(a->l) * eval(a->r);
-        case '/': return eval(a->l) / eval(a->r);
+        case '+': return fb3_1::eval(a->l) + fb3_1::eval(a->r);
+        case '-': return fb3_1::eval(a->l) - fb3_1::eval(a->r);
+        case '*': return fb3_1::eval(a->l) * fb3_1::eval(a->r);
+        case '/': return fb3_1::eval(a->l) / fb3_1::eval(a->r);
         case '|':
         {
-            double d = eval(a->l);
+            double d = fb3_1::eval(a->l);
             if (d < 0)
             {
                 return -d;
             }
             return d;
         }
-        case 'M': return -eval(a->l);
+        case 'M': return -fb3_1::eval(a->l);
     }
 }
 
-void treefree(ast *a)
+void fb3_1::treefree(fb3_1::ast *a)
 {
     switch (a->nodetype)
     {
@@ -71,11 +72,11 @@ void treefree(ast *a)
         case '+':
         case '-':
         case '*':
-        case '/':treefree(a->r);
+        case '/':fb3_1::treefree(a->r);
             [[fallthrough]];
         case '|':
         case 'M':
-            treefree(a->l);
+            fb3_1::treefree(a->l);
             [[fallthrough]];
         case 'K':
             free(a);
