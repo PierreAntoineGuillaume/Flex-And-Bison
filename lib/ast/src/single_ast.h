@@ -22,6 +22,7 @@ namespace v1::ast::fb31
     public:
         ~single_ast() override = default;
         T accept(ast_visitor<T> & visitor) override;
+        T accept(ast_visitor<T> && visitor) override;
 
         single_ast(unsigned char symbol, astptr child);
 
@@ -31,6 +32,11 @@ namespace v1::ast::fb31
 
 template <typename T>
 T v1::ast::fb31::single_ast<T>::accept(v1::ast::fb31::ast_visitor<T> & visitor)
+{
+    return visitor.visit(*this);
+}
+template <typename T>
+T v1::ast::fb31::single_ast<T>::accept(v1::ast::fb31::ast_visitor<T> && visitor)
 {
     return visitor.visit(*this);
 }

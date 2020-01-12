@@ -17,5 +17,6 @@ namespace v1::ast::fb31
     public:
         virtual ~ast() = default;
         virtual T accept(ast_visitor<T> & visitor) = 0;
+        virtual T accept(ast_visitor<T> && visitor) = 0;
     };
 }

@@ -18,6 +18,7 @@ namespace v1::ast::fb31
         const T value;
         ~value_ast() override = default;
         T accept(ast_visitor<T> & visitor) override;
+        T accept(ast_visitor<T> && visitor) override;
 
         value_ast(const T & value);
     };
@@ -26,6 +27,12 @@ namespace v1::ast::fb31
 
 template <typename T>
 T v1::ast::fb31::value_ast<T>::accept(v1::ast::fb31::ast_visitor<T> & visitor)
+{
+    return visitor.visit(*this);
+}
+
+template <typename T>
+T v1::ast::fb31::value_ast<T>::accept(v1::ast::fb31::ast_visitor<T> && visitor)
 {
     return visitor.visit(*this);
 }
