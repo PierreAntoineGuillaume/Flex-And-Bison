@@ -46,14 +46,6 @@ list:  /* nothing */ { $$ = NULL; }
         }
     }
 ;
-calclist:
-| calclist exp EOL {
-    printf("> ");
-}
-| calclist EOL {
-    printf("> ");
-}
-;
 
 exp: exp CMP exp        { $$ = newcmp($2, $1, $3); }
 | exp '+' exp           { $$ = newast('+', $1, $3); }

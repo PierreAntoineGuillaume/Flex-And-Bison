@@ -2,6 +2,8 @@
 // Created by pierreantoine on 11/01/2020.
 //
 
+#pragma once
+
 #include <cstdlib>
 
 
@@ -14,16 +16,16 @@ void yyerror(const char *s, ...);
 
 extern int yylex (void);
 
-typedef struct symbol
+struct symbol
 {
     char *name;
     double value;
     astptr func;
     symlistptr syms;
-} symbol;
+};
 
-#define NHASH 9997
-symbol symtab[NHASH];
+constexpr std::size_t NHASH = 9997;
+extern struct symbol symtab[NHASH];
 
 symbolptr lookup(char *);
 

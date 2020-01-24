@@ -14,7 +14,6 @@ EXP ([eE][+-]?[0-9]+)
 "-" |
 "*" |
 "/" |
-"|" |
 "=" |
 "," |
 ";" |
@@ -37,9 +36,9 @@ EXP ([eE][+-]?[0-9]+)
 "let"       { return LET; }
 
 
-"sqrt"      { yylval.fn = B_sqrt; return FUNC; }
-"exp"       { yylval.fn = B_exp; return FUNC; }
-"log"       { yylval.fn = B_log; return FUNC; }
+"sqrt"      { yylval.fn = B_sqrt;  return FUNC; }
+"exp"       { yylval.fn = B_exp;   return FUNC; }
+"log"       { yylval.fn = B_log;   return FUNC; }
 "echo"      { yylval.fn = B_print; return FUNC; }
 
 [a-zA-Z][a-zA-Z0-9_]{2,}     { yylval.s = lookup(yytext); return NAME; }
