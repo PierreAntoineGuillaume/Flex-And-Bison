@@ -1,49 +1,91 @@
 
 %{
+
+#include <cstdio>
+#include <cstdlib>
 #include "fb3-2.h"
 %}
 
 %union {
     astptr a;
     double d;
+    symbolptr s;
+    symlistptr sl;
+    int fn;
 }
 
 %token <d> NUMBER
-%token EOL
-%type <a> exp
+%token <s> NAME
+%token <fn> FUNC
+%token IF THEN ELSE WHILE DO LET EOL
 
+%nonassoc <fn> CMP
+%right '='
 %left '+' '-'
-%left '*' '/' '%'
+%left '*' '/'
 %nonassoc '|' UMINUS
+
+%type <a> exp stmt list explist
+%type <sl> symlist
+
+%start calclist
 
 %%
 
+stmt: IF exp THEN list              { $$ = newflow('I', $2, $4, NULL); }
+    | IF exp THEN list ELSE list    { $$ = newflow('I', $2, $4, $6); }
+    | WHILE exp DO list             { $$ = newflow('W', $2, $4, NULL); }
+    | exp
+;
+list:  /* nothing */ { $$ = NULL; }
+    | stmt ';' list {
+        if ($3 == NULL) {
+            $$ = $1;
+        } else {
+            $$ = newast('L', $1, $3);
+        }
+    }
+;
 calclist:
 | calclist exp EOL {
-    try
-    {
-        auto guard = ast_lockguard($2);
-        printf("= %g\n", $2->accept(eval()));
-    } catch (const std::runtime_error & error)
-    {
-        std::cerr << "Runtime Error : " << error.what() << "\n";
-    }
     printf("> ");
 }
 | calclist EOL {
     printf("> ");
 }
+;
 
-exp: exp '+' exp { $$ = new d_ast($1,'+', $3); }
-| exp '-' exp { $$ = new d_ast($1,'-', $3); }
-| exp '*' exp { $$ = new d_ast($1,'*', $3); }
-| exp '/' exp { $$ = new d_ast($1,'/', $3); }
-| exp '%' exp { $$ = new d_ast($1,'%', $3); }
-| '|' exp { $$ = new s_ast('|', $2); }
-| '(' exp ')' { $$ = $2; }
-| '-' exp %prec UMINUS { $$ = new s_ast('M', $2); }
-| NUMBER { $$ = new val_ast($1); }
+exp: exp CMP exp        { $$ = newcmp($2, $1, $3); }
+| exp '+' exp           { $$ = newast('+', $1, $3); }
+| exp '-' exp           { $$ = newast('-', $1, $3); }
+| exp '*' exp           { $$ = newast('*', $1, $3); }
+| exp '/' exp           { $$ = newast('/', $1, $3); }
+| '|' exp               { $$ = newast('|', $2, NULL); }
+| '(' exp ')'           { $$ = $2; }
+| '-' exp %prec UMINUS  { $$ = newast('M', $2, NULL); }
+| NUMBER                { $$ = newnum($1); }
+| NAME                  { $$ = newref($1); }
+| NAME '=' exp          { $$ = newasgn($1, $3); }
+| FUNC '(' explist ')'  { $$ = newfunc($1, $3); }
+| NAME '(' explist ')'  { $$ = newcall($1, $3); }
+;
 
+explist: exp
+| exp ',' explist   { $$ = newast('L', $1, $3); }
+;
+
+symlist:NAME {$$ = newsymlist($1, NULL); }
+| NAME ',' symlist {$$ = newsymlist($1, $3); }
+;
+
+calclist:
+| calclist stmt EOL                                 { printf("= %4.4g\n>", eval($2)); treefree($2); }
+| calclist LET NAME '(' symlist ')' '=' list EOL    {
+    dodef($3, $5, $8);
+    printf("Defined %s\n>", $3->name);
+}
+| calclist error EOL                                { yyerrok; printf("> ");}
+;
 %%
 
 int main()

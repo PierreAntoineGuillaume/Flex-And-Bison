@@ -2,9 +2,9 @@
 // Created by pierreantoine on 11/01/2020.
 //
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <src/flex.h>
+#include "fb3-2.h"
+#include <cstdio>
+#include <cstdarg>
 
 void yyerror(const char *s, ...)
 {
