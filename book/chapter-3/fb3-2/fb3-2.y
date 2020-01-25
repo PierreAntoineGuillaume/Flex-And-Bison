@@ -66,17 +66,19 @@ explist: exp
 | exp ',' explist   { $$ = newast('L', $1, $3); }
 ;
 
-symlist:NAME {$$ = newsymlist($1, NULL); }
-| NAME ',' symlist {$$ = newsymlist($1, $3); }
+symlist:NAME        { $$ = newsymlist($1, NULL); }
+| NAME ',' symlist  { $$ = newsymlist($1, $3); }
 ;
 
-calclist:
-| calclist stmt EOL                                 { printf("= %4.4g\n>", eval($2)); treefree($2); }
+calclist:                                           { printf("> "); }
+| calclist EOL                                      { printf("> "); }
+| calclist stmt EOL                                 { printf("= %4.4g\n> ", eval($2)); treefree($2); }
 | calclist LET NAME '(' symlist ')' '=' list EOL    {
+    printf("doing def\n");
     dodef($3, $5, $8);
     printf("Defined %s\n>", $3->name);
 }
-| calclist error EOL                                { yyerrok; printf("> ");}
+| calclist error EOL                                { yyerrok; printf("\n> ");}
 ;
 %%
 

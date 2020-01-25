@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <cstdarg>
 #include <cstring>
+#include <cmath>
 #include "fb3-2.h"
 
 
@@ -67,7 +68,7 @@ void assert_not_null(void *pointer)
     if (!pointer)
     {
         yyerror("out of space");
-        exit(0);
+        exit(1);
     }
 }
 
@@ -214,13 +215,202 @@ void symlistfree(symlistptr sl)
     }
 }
 
+double eval_if(struct flow *ast);
+double eval_while(struct flow *ast);
+double callbuiltin(struct fncall *ast);
+double calluser(struct ufncall *ast);
 
-void dodef(symbolptr, symlistptr, astptr)
+void reset_old_values(unsigned int nargs, const double *oldval, symlistptr sl);
+double eval(astptr a)
 {
+    if (!a)
+    {
+        return 0.0;
+    }
 
+    switch (a->nodetype)
+    {
+        case 'K':
+            return ((struct numval *) a)->number;
+        case 'N':
+            return ((struct symref *) a)->s->value;
+        case '=':
+            return ((struct symasgn *) a)->s->value = eval(((struct symasgn *) a)->v);
+        case '+':
+            return eval(a->l) + eval(a->r);
+        case '-':
+            return eval(a->l) - eval(a->r);
+        case '*':
+            return eval(a->l) * eval(a->r);
+        case '/':
+            return eval(a->l) / eval(a->r);
+        case '|':
+            return std::abs(eval(a->l));
+        case 'M':
+            return -eval(a->l);
+        case '1':
+            return eval(a->l) > eval(a->r);
+        case '2':
+            return eval(a->l) < eval(a->r);
+        case '3':
+            return eval(a->l) != eval(a->r);
+        case '4':
+            return eval(a->l) == eval(a->r);
+        case '5':
+            return eval(a->l) >= eval(a->r);
+        case '6':
+            return eval(a->l) <= eval(a->r);
+
+        case 'I':
+            return eval_if((struct flow *) a);
+        case 'W':
+            return eval_while((struct flow *) a);
+
+        case 'L':
+            eval(a->l);
+            return eval(a->r);
+        case 'F':
+            return callbuiltin((struct fncall *) a);
+        case 'C':
+            return calluser((struct ufncall *) a);
+        default:
+            printf("internal error: bad node %c\n", a->nodetype);
+    }
+    return 0;
 }
 
-double eval(astptr)
+double eval_if(struct flow *ast)
 {
-    return 0.;
+    if (eval(ast->cond) != 0)
+    {
+        return eval(ast->el);
+    }
+    return eval(ast->tl);
+}
+
+double eval_while(struct flow *ast)
+{
+    if (!ast->tl)
+    {
+        return 0;
+    }
+    double v = 0;
+    while (eval(ast->cond) != 0)
+    {
+        v = eval(ast->tl);
+    }
+    return v;
+}
+
+double callbuiltin(struct fncall *ast)
+{
+    double v = eval(ast->l);
+    switch (ast->functype)
+    {
+        case bifs::B_sqrt:
+            return std::sqrt(v);
+        case bifs::B_exp:
+            return std::exp(v);
+        case bifs::B_log:
+            return std::log(v);
+        case bifs::B_print:
+            printf("= %4.4g\n", v);
+            return v;
+    }
+    yyerror("unknown built-in call with key: %d", ast->functype);
+    return 0;
+}
+
+void dodef(symbolptr name, symlistptr syms, astptr func)
+{
+    if (name->syms)
+    {
+        symlistfree(name->syms);
+    }
+    name->syms = syms;
+    if (name->func)
+    {
+        treefree(name->func);
+    }
+    name->func = func;
+}
+
+unsigned count_args(symlistptr list)
+{
+    unsigned count;
+    for (count = 0; list; list = list->next)
+    {
+        count += 1;
+    }
+    return count;
+}
+
+double *double_malloc(unsigned size)
+{
+    auto d = (double *) malloc(size * sizeof(double));
+    assert_not_null(d);
+    return d;
+}
+void save_and_update_values(symlistptr sl, unsigned int size, double *memory, const double* new_values);
+void reset_old_values(symlistptr, unsigned int, const double *);
+
+double calluser(struct ufncall *ast)
+{
+    auto fn = ast->s;
+    if (!fn->func)
+    {
+        yyerror("call to undefined function %s\n", fn->name);
+        return 0;
+    }
+    auto args = ast->l;
+    unsigned nargs = count_args(fn->syms);
+    auto oldval = double_malloc(nargs);
+    auto newval = double_malloc(nargs);
+
+    for (unsigned i = 0; i < nargs; ++i)
+    {
+        if (!args)
+        {
+            yyerror("too few arguments in call to %s", fn->name);
+            free(oldval);
+            free(newval);
+            return 0;
+        }
+        if (args->nodetype == 'L')
+        {
+            newval[i] = eval(args->l);
+            args = args->r;
+            continue;
+        }
+        newval[i] = eval(args);
+        args = nullptr;
+    }
+
+    save_and_update_values(fn->syms, nargs, oldval, newval);
+    free(newval);
+    double v = eval(fn->func);
+
+    reset_old_values(fn->syms, nargs, oldval);
+    free(oldval);
+    return v;
+}
+
+
+void save_and_update_values(symlistptr sl, unsigned int size, double *memory, const double* new_values)
+{
+    for (unsigned i = 0; i < size; ++i)
+    {
+        memory[i] = sl->sym->value;
+        sl->sym->value = new_values[i];
+        sl = sl->next;
+    }
+}
+
+void reset_old_values(symlistptr sl, unsigned int size, const double *old_values)
+{
+    for (unsigned i = 0; i < size; ++i)
+    {
+        sl->sym->value = old_values[i];
+        sl = sl->next;
+    }
 }
