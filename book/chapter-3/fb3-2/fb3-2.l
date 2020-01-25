@@ -4,7 +4,6 @@
 %{
     #include "fb3-2.h"
     #include "fb3-2.yy.hpp"
-    #define yield(item) printf(#item "\n"); return item;
 %}
 
 EXP         ([eE][+-]?[0-9]+)
@@ -22,21 +21,21 @@ EXP         ([eE][+-]?[0-9]+)
 "{" |
 "}" |
 "(" |
-")" {  yield(yytext[0]); }
+")" {  return yytext[0]; }
 
-">"         { yylval.fn = 1; yield(CMP); }
-"<"         { yylval.fn = 2; yield(CMP); }
-"<>" | "!=" { yylval.fn = 3; yield(CMP); }
-"=="        { yylval.fn = 4; yield(CMP); }
-">="        { yylval.fn = 5; yield(CMP); }
-"<="        { yylval.fn = 6; yield(CMP); }
+">"         { yylval.fn = 1; return CMP; }
+"<"         { yylval.fn = 2; return CMP; }
+"<>" | "!=" { yylval.fn = 3; return CMP; }
+"=="        { yylval.fn = 4; return CMP; }
+">="        { yylval.fn = 5; return CMP; }
+"<="        { yylval.fn = 6; return CMP; }
 
-"if"        { yield(IF); }
-"then"      { yield(THEN); }
-"else"      { yield(ELSE); }
-"while"     { yield(WHILE); }
-"do"        { yield(DO); }
-"let"       { yield(LET); }
+"if"        { return IF; }
+"then"      { return THEN; }
+"else"      { return ELSE; }
+"while"     { return WHILE; }
+"do"        { return DO; }
+"let"       { return LET; }
 
 
 "sqrt"      { yylval.fn = B_sqrt;  return FUNC; }
@@ -44,7 +43,7 @@ EXP         ([eE][+-]?[0-9]+)
 "log"       { yylval.fn = B_log;   return FUNC; }
 "echo"      { yylval.fn = B_print; return FUNC; }
 
-[a-zA-Z][a-zA-Z0-9_]*     { yylval.s = lookup(yytext); yield(NAME); }
+[a-zA-Z][a-zA-Z0-9_]*     { yylval.s = lookup(yytext); return NAME; }
 
 [0-9]+{EXP}? |
 [0-9]+"."[0-9]*{EXP}? |
@@ -54,6 +53,8 @@ EXP         ([eE][+-]?[0-9]+)
 
 \\\n    { printf("> "); }
 \n      { return EOL; }
+
+<<EOF>>  return EOFILE;
 
 [ \t]   ;
 .       { yyerror("unknown character %s", yytext); }

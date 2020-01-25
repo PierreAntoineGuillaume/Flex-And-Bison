@@ -122,3 +122,4 @@ astptr newflow(int nodetype, astptr cond, astptr tl, astptr el);
 void dodef(symbolptr name, symlistptr syms, astptr stmts);
 double eval(astptr);
 void treefree(astptr);
+void yyrestart(FILE * file);

@@ -18,6 +18,7 @@
 %token <s> NAME
 %token <fn> FUNC
 %token IF THEN ELSE WHILE DO LET EOL
+%token EOFILE 0
 
 %nonassoc <fn> CMP
 %right '='
@@ -70,21 +71,43 @@ symlist:NAME        { $$ = newsymlist($1, NULL); }
 | NAME ',' symlist  { $$ = newsymlist($1, $3); }
 ;
 
+end: EOL
+| EOFILE
+
 calclist:                                           { printf("> "); }
-| calclist EOL                                      { printf("> "); }
-| calclist stmt EOL                                 { printf("= %4.4g\n> ", eval($2)); treefree($2); }
-| calclist LET NAME '(' symlist ')' '=' list EOL    {
-    printf("doing def\n");
+| calclist stmt end                                 { printf("= %4.4g\n> ", eval($2)); treefree($2); }
+| calclist LET NAME '(' symlist ')' '=' list end    {
     dodef($3, $5, $8);
     printf("Defined %s\n>", $3->name);
 }
-| calclist error EOL                                { yyerrok; printf("\n> ");}
+| calclist error end                                { yyerrok; printf("\n> ");}
 ;
 %%
 
-int main()
+#include <vector>
+#include <string>
+
+int main(int argc, char **argv)
 {
-    yyparse();
+    std::vector<std::string> arguments(argv+1, argv+argc);
+    if (arguments.size() < 1)
+    {
+        yyparse();
+        return 0;
+    }
+    for (const auto &file:arguments)
+    {
+        FILE *handle = fopen(file.c_str(), "r");
+        if (!handle)
+        {
+            perror("bad file");
+            exit(1);
+        }
+        yylineno=1;
+        yyrestart(handle);
+        yyparse();
+        fclose(handle);
+    }
     return 0;
 }
 
