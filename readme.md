@@ -17,7 +17,8 @@ Flex & Bison Book Completion :
 
 - [x] chapter II
 - [x] chapter III
-    - [ ] remove keywords **then** and **do**
+    - [x] remove keywords **then** and **do**
+    - [ ] put some {} accolades in statement list (force them)
     - [ ] allow skiping lines
 - [ ] chapter IV - Won't be done
 - [ ] chapter V
