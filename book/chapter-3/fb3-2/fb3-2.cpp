@@ -185,6 +185,9 @@ void treefree(astptr a)
         case 'N':
             break;
 
+        case '=':
+            treefree(((struct symasgn *) a)->v);
+            break;
         case 'I' :
         case 'W':
             treefree(((struct flow *) a)->cond);
@@ -219,7 +222,7 @@ double eval_if(struct flow *ast);
 double eval_while(struct flow *ast);
 double callbuiltin(struct fncall *ast);
 double calluser(struct ufncall *ast);
-
+double read_number(struct numval *a);
 void reset_old_values(unsigned int nargs, const double *oldval, symlistptr sl);
 double eval(astptr a)
 {
@@ -231,7 +234,7 @@ double eval(astptr a)
     switch (a->nodetype)
     {
         case 'K':
-            return ((struct numval *) a)->number;
+            return read_number((struct numval *) a);
         case 'N':
             return ((struct symref *) a)->s->value;
         case '=':
@@ -279,13 +282,18 @@ double eval(astptr a)
     return 0;
 }
 
+double read_number(struct numval *a)
+{
+    return a->number;
+}
+
 double eval_if(struct flow *ast)
 {
     if (eval(ast->cond) != 0)
     {
-        return eval(ast->el);
+        return eval(ast->tl);
     }
-    return eval(ast->tl);
+    return eval(ast->el);
 }
 
 double eval_while(struct flow *ast)
@@ -351,7 +359,7 @@ double *double_malloc(unsigned size)
     assert_not_null(d);
     return d;
 }
-void save_and_update_values(symlistptr sl, unsigned int size, double *memory, const double* new_values);
+void save_and_update_values(symlistptr sl, unsigned int size, double *memory, const double *new_values);
 void reset_old_values(symlistptr, unsigned int, const double *);
 
 double calluser(struct ufncall *ast)
@@ -395,8 +403,7 @@ double calluser(struct ufncall *ast)
     return v;
 }
 
-
-void save_and_update_values(symlistptr sl, unsigned int size, double *memory, const double* new_values)
+void save_and_update_values(symlistptr sl, unsigned int size, double *memory, const double *new_values)
 {
     for (unsigned i = 0; i < size; ++i)
     {
