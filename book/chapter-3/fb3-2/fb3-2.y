@@ -33,9 +33,9 @@
 
 %%
 
-stmt: IF exp THEN list              { $$ = newflow('I', $2, $4, NULL); }
-    | IF exp THEN list ELSE list    { $$ = newflow('I', $2, $4, $6); }
-    | WHILE exp DO list             { $$ = newflow('W', $2, $4, NULL); }
+stmt: IF '(' exp ')' list              { $$ = newflow('I', $3, $5, NULL); }
+    | IF '(' exp ')' list ELSE list    { $$ = newflow('I', $3, $5, $7); }
+    | WHILE '(' exp ')' list             { $$ = newflow('W', $3, $5, NULL); }
     | exp
 ;
 list:  /* nothing */ { $$ = NULL; }
@@ -74,8 +74,8 @@ symlist:NAME        { $$ = newsymlist($1, NULL); }
 end: EOL
 | EOFILE
 
-calclist:                                           { printf("> "); }
-| calclist stmt end                                 { printf("= %4.4g\n> ", eval($2)); treefree($2); }
+calclist:                                           ;
+| calclist stmt end                                 { printf("= %g\n> ", eval($2)); treefree($2); }
 | calclist LET NAME '(' symlist ')' '=' list end    {
     dodef($3, $5, $8);
     printf("Defined %s\n>", $3->name);

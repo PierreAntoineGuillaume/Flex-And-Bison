@@ -51,7 +51,7 @@ EXP         ([eE][+-]?[0-9]+)
 
 "//".* ;
 
-\\\n    { printf("> "); }
+\\\n    ;
 \n      { return EOL; }
 
 <<EOF>>  return EOFILE;

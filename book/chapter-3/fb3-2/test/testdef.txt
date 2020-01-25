@@ -3,6 +3,7 @@ let avg (a, b) = (a+b)/2;
 1+avg(2,5)
 variable = avg(3,5)
 echo(variable)
-let sq(n)=e=1; while |((t=n/e)-e)>.001 do e=avg(e,t);;
+let sq(n)=  e=1;    while (|((t=n/e)-e)>.001)    e=avg(e,t);;
 sq(10)
-if 1 > 0 then 1+3; else 5;
+if (1 > 0) 1+3; \
+else 5;

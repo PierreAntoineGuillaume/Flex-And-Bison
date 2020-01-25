@@ -322,7 +322,7 @@ double callbuiltin(struct fncall *ast)
         case bifs::B_log:
             return std::log(v);
         case bifs::B_print:
-            printf("= %4.4g\n", v);
+            printf("echo (%g)\n", v);
             return v;
     }
     yyerror("unknown built-in call with key: %d", ast->functype);
