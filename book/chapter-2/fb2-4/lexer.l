@@ -30,27 +30,27 @@ int main(int argc, char** argv)
     try
     {
         if (argc < 2)
-            {
-                lexer.lexSTDIN();
-                lexer.display_table();
-                return 0;
-            }
-
-            std::vector<std::string> arguments(argv+1, argv+argc);
-
-            for (const auto &file:arguments)
-            {
-                FILE *handle = fopen(file.c_str(), "r");
-                if (!handle)
-                {
-                    throw new std::runtime_error("could not open file: " + file);
-                }
-
-                lexer.lexFile(file.c_str(), handle);
-                fclose(handle);
-            }
-
+        {
+            lexer.lexSTDIN();
             lexer.display_table();
+            return 0;
+        }
+
+        std::vector<std::string> arguments(argv+1, argv+argc);
+
+        for (const auto &file:arguments)
+        {
+            FILE *handle = fopen(file.c_str(), "r");
+            if (!handle)
+            {
+                throw std::runtime_error("could not open file: " + file);
+            }
+
+            lexer.lexFile(file.c_str(), handle);
+            fclose(handle);
+        }
+
+        lexer.display_table();
     }
     catch (const std::exception& e)
     {
