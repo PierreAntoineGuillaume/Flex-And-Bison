@@ -11,5 +11,17 @@ A quick summary of my own content :
 
 ## Aim
 
-* Completing the Flex & Bison Book
-    * Currently working on chapter 3-2
+Flex & Bison Book Completion :
+
+* Currently working on cleaning up chapter 3-2 in chapter/3-2-2 :
+
+- [x] chapter II
+- [x] chapter III
+    - [ ] remove keywords **then** and **do**
+    - [ ] allow skiping lines
+- [ ] chapter IV - Won't be done
+- [ ] chapter V
+- [ ] chapter VI
+- [ ] chapter VII
+- [ ] chapter VIII
+- [ ] chapter IX
