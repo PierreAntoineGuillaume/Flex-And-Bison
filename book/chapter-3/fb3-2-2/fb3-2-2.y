@@ -4,6 +4,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include "fb3-2-2.h"
+#include <string>
+
+std::string filename;
 %}
 
 %union {
@@ -33,9 +36,9 @@
 
 %%
 
-stmt: IF '(' exp ')' list              { $$ = newflow('I', $3, $5, NULL); }
-    | IF '(' exp ')' list ELSE list    { $$ = newflow('I', $3, $5, $7); }
-    | WHILE '(' exp ')' list             { $$ = newflow('W', $3, $5, NULL); }
+stmt: IF '(' exp ')' '{' list '}'                       { $$ = newflow('I', $3, $6, NULL); }
+    | IF '(' exp ')' '{' list '}' ELSE '{' list '}'     { $$ = newflow('I', $3, $6, $10); }
+    | WHILE '(' exp ')' '{' list '}'                    { $$ = newflow('W', $3, $6, NULL); }
     | exp
 ;
 list:  /* nothing */ { $$ = NULL; }
@@ -103,6 +106,7 @@ int main(int argc, char **argv)
             perror("bad file");
             exit(1);
         }
+        filename = file;
         yylineno=1;
         yyrestart(handle);
         yyparse();

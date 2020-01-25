@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <string>
 
 
 typedef struct ast *astptr;
@@ -12,6 +13,7 @@ typedef struct symbol *symbolptr;
 typedef struct symlist *symlistptr;
 
 extern int yylineno;
+extern std::string filename;
 void yyerror(const char *s, ...);
 
 extern int yylex (void);
