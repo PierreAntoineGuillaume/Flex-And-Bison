@@ -62,7 +62,7 @@ struct ast
 {
     int nodetype;
     astptr l;
-    astptr d;
+    astptr r;
 };
 
 struct fncall
@@ -112,12 +112,12 @@ struct symasgn
 
 astptr newast(int nodetype, astptr l, astptr r);
 astptr newcmp(int cmptype, astptr l, astptr r);
-astptr newfunc(int functype, astptr l);
+astptr newfunc(enum bifs functype, astptr l);
 astptr newcall(symbolptr s, astptr l);
 astptr newref(symbolptr s);
 astptr newasgn(symbolptr s, astptr v);
 astptr newnum(double d);
-astptr newflow(int nodetype, astptr cond, astptr tl, astptr tr);
+astptr newflow(int nodetype, astptr cond, astptr tl, astptr el);
 
 void dodef(symbolptr name, symlistptr syms, astptr stmts);
 double eval(astptr);
