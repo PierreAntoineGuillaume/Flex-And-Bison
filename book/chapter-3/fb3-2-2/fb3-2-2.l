@@ -37,6 +37,9 @@ EXP         ([eE][+-]?[0-9]+)
 "do"        { return DO; }
 "let"       { return LET; }
 
+"#enable"    { return ENABLE; }
+"#disable"   { return DISABLE; }
+"debug"     { return DEBUGGING; }
 
 "sqrt"      { yylval.fn = B_sqrt;  return FUNC; }
 "exp"       { yylval.fn = B_exp;   return FUNC; }

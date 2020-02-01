@@ -9,6 +9,8 @@
 std::string filename;
 %}
 
+%define parse.trace
+
 %union {
     astptr a;
     double d;
@@ -17,11 +19,13 @@ std::string filename;
     int fn;
 }
 
+
 %token <d> NUMBER
 %token <s> NAME
 %token <fn> FUNC
 %token IF THEN ELSE WHILE DO LET EOL
 %token EOFILE 0
+%token DISABLE ENABLE DEBUGGING
 
 %nonassoc <fn> CMP
 %right '='
@@ -78,6 +82,7 @@ end: EOL
 | EOFILE
 
 calclist:                                           ;
+| calclist directive end
 | calclist stmt end                                 { printf("= %g\n> ", eval($2)); treefree($2); }
 | calclist LET NAME '(' symlist ')' '=' list end    {
     dodef($3, $5, $8);
@@ -85,6 +90,11 @@ calclist:                                           ;
 }
 | calclist error end                                { yyerrok; printf("\n> ");}
 ;
+
+
+directive: ENABLE DEBUGGING     { yydebug = 1; }
+| DISABLE DEBUGGING             { yydebug = 0; }
+
 %%
 
 #include <vector>
