@@ -6,3 +6,4 @@ a.out
 *.output
 bin/
 cmake-build-debug/
+/build/

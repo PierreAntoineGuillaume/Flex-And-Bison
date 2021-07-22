@@ -28,10 +28,11 @@ extern "C" {
     int yywrap();
 }
 
+/*
 int yyFlexLexer::yywrap(){
     return ::yywrap();
 }
-
+*/
 
 int main( int /* argc */, char** /* argv */ )
 {
